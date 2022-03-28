@@ -1,0 +1,4 @@
+env.NAME = 'vinay'
+env.AGE = '24'
+env.CITY = 'uravakonda'
+env.COMPANY = 'CAPG'
