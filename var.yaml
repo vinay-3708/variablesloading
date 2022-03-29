@@ -1,7 +1,4 @@
 APPLICATION:
   NAME: FW
   VERSION: 0.0.1
-LIST:
-  - FIRST
-  - SECOND
-  - THIRD
+LIST: kumar
