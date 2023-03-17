@@ -1,4 +1,4 @@
-This Project for loading variable values for specific files directly and also using shared library.
+This Project is for loading variable values from specific files directly and also using shared library.
 
 1. Loading directly from file:
     
@@ -18,6 +18,6 @@ This Project for loading variable values for specific files directly and also us
       import the file from shared library as below in jenkinsfile
       
             @Library('shared-library') _        #has to configure the shared-library. FOllow the doc from jenkins page.
-            import com.org.ren.Constants
+            import com.org.re.Constants
 
       Now, we can use the variable as ${Constants.LAST_NAME}
