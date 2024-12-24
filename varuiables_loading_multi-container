@@ -1,0 +1,68 @@
+pipeline {
+    agent {
+        kubernetes {
+            yaml '''
+            apiVersion: v1
+            kind: Pod
+            spec:
+                containers:
+                - name: maven
+                  image: maven:alpine
+                  command:
+                  - cat
+                  tty: true
+                - name: node
+                  image: node:23-alpine3.19
+                  command:
+                  - cat
+                  tty: true
+                - name: python
+                  image: python:alpine
+                  command:
+                  - cat
+                  tty: true
+            '''
+        }
+    }
+    environment {
+  CITY = "UKD"
+  STATE = "AP"
+}
+    stages {
+        stage('First Stage') {
+            steps {
+                container('maven') {
+                    sh 'mvn -version'
+                    sh 'pwd'
+                    sh '''
+                        echo "NAME=vinay" > env.txt
+                        echo "AGE=26" >> env.txt
+                        export $(cat env.txt | xargs)
+                        echo $NAME
+                    '''
+                }
+            }
+        }
+        stage('Node Stage') {
+            steps {
+                container('node') {
+                    sh 'npm version'
+                    sh 'pwd'
+                    sh 'cat env.txt'
+                }
+            }
+        }
+        stage('Python Stage') {
+            steps {
+                container('node') {
+                    sh 'npm version'
+                    sh 'pwd'
+                    sh 'echo "Python Stage" >> process.txt'
+                    sh 'cat process.txt'
+                    sh "echo ${env.CITY}"
+                    sh "echo ${env.STATE}"
+                }
+            }
+        }
+    }
+}
