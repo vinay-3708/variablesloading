@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Create File') {
+            steps {
+                script {
+                    sh """
+                        touch vars.txt
+                        echo env.NAME=\"vinay\" > vars.groovy
+                        echo env.AGE=\"26\" >> vars.groovy
+                    """
+                }
+            }
+        }
+        stage('Print') {
+            steps {
+                script {
+                    sh """
+                        cat vars.groovy
+                        cat $JENKINS_HOME/env_fol/vars.groovy
+                    """
+                }
+            }
+        }
+        stage('Load Env') {
+            steps {
+                script {
+                    load "$JENKINS_HOME/env_fol/vars.groovy"
+                }
+            }
+        }
+        stage('Print Env') {
+            steps {
+                script {
+                    sh """
+                        echo $NAME
+                        echo ${env.AGE}
+                    """
+                  echo "${env.AGE}"
+                }
+            }
+        }
+    }
+}
